@@ -1,0 +1,28 @@
+version: 0.1
+
+env:
+  variables:
+    API_BASE_URL: "$API_BASE_URL"
+    S3_BUCKET: "$S3_BUCKET"
+    RABBIT_URL: "$RABBIT_URL"
+    WEBSITE_BUCKET: "$WEBSITE_BUCKET"
+  parameter-store:
+    GOOGLE_MAP_CLIENT_ID: "$GOOGLE_MAP_CLIENT_ID"
+
+phases:
+  install:
+    commands:
+      # Install packages
+      npm install
+  pre_build:
+    commands:
+      - npm run prebuild
+  build:
+    commands:
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 sync --delete dist/ s3://$WEBSITE_BUCKET
+      - aws s3 sync styles/ s3://$WEBSITE_BUCKET/styles
+      - aws s3 sync src/lib/ s3://$WEBSITE_BUCKET/lib --exclude "*" --include "markerwithlabel.js"
+      - aws s3 sync src/sounds/ s3://$WEBSITE_BUCKET/sounds
