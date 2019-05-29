@@ -42,5 +42,9 @@
   "category": {
     "dataSource": "postgresDB",
     "public": true
+  },
+  "expense": {
+    "dataSource": "postgresDB",
+    "public": true
   }
 }

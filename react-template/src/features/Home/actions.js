@@ -1,11 +1,14 @@
 import * as types from './actionTypes';
 import axios from 'axios';
 
-export const getFirstExpenses = () => (dispatch) => {
-  return axios.get(`/Categories`).then((response) => {
-    console.log("respo: ", response)
-    return dispatch({ type: types.GET_FIRST_EXPENSES });
 
+let globalCurrentPage = 1;
+
+export const GetExpenses = () => (dispatch) => {
+  let filter = BuildExpensesFilter(globalCurrentPage);
+  return axios.get(`/Expenses`).then((response) => {
+    console.log("expenses: ", response)
+    return dispatch({ type: types.GET_EXPENSES, payload: response.data });
   })
 };
 
@@ -15,5 +18,30 @@ export const getCategories = (value) => (dispatch) => {
 }
 
 export const ClearExpenses = () => (dispatch) => {
-  dispatch({ type: CLEAR_EXPENSES });
+  dispatch({ type: types.CLEAR_EXPENSES });
 };
+
+export const BeginExpenses = () => (dispatch) => {
+  dispatch(ClearExpenses());
+  dispatch(CountExpenses());
+  return dispatch(GetExpenses());
+};
+
+export const CountExpenses = (id) => (dispatch) => {
+  let filter = (id !== null) ? { "where": { "bankId": id } } : {};
+  return axios.get(`/Expenses/count?where=${encodeURIComponent(JSON.stringify(filter.where))}`)
+    .then((response) => {
+      console.log("count: ", response);
+      dispatch({ type: types.GET_EXPENSES_COUNT, count: response.data.count })
+    });
+};
+
+function BuildExpensesFilter(page = 1, pageSize = 10) {
+  let filter = {
+    "include": ["category"],
+    "order": "date DESC",
+    "limit": 10,
+    "skip": (page - 1) * pageSize,
+  };
+  return filter;
+}

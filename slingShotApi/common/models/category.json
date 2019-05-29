@@ -10,7 +10,7 @@
             "type": "string",
             "required": true
         },
-        "balance": {
+        "expectedExpense": {
             "type": "number",
             "required": true
         }
