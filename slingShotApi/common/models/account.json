@@ -1,0 +1,39 @@
+{
+  "name": "account",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "required": false
+    },	
+    "username": {
+      "type": "string",
+      "required": false
+    },	
+    "password": {
+      "type": "string",
+      "required": false
+    },	
+    "email": {
+      "type": "string",
+      "required": false
+    },	
+    "created_on": {
+      "type": "string",
+      "required": false
+    },	
+    "last_login": {
+      "type": "string",
+      "required": false
+    }  
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
+
