@@ -6,15 +6,11 @@
     "validateUpsert": true
   },
   "properties": {
-    "user_id": {
-      "type": "string",
-      "required": false
-    },
     "username": {
       "type": "string",
       "required": false
     },
-    "intialAmount": {
+    "initialAmount": {
       "type": "number",
       "required": true,
       "postgresql": {
@@ -27,22 +23,6 @@
       "postgresql": {
         "dataType": "decimal"
       }
-    },
-    "password": {
-      "type": "string",
-      "required": false
-    },
-    "email": {
-      "type": "string",
-      "required": false
-    },
-    "created_on": {
-      "type": "string",
-      "required": false
-    },
-    "last_login": {
-      "type": "string",
-      "required": false
     }
   },
   "validations": [],
