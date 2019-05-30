@@ -21,6 +21,10 @@
             "type": "date",
             "required": true
         },
+        "description": {
+            "type": "string",
+            "required": false
+        },
         "categoryId": {
             "type": "number",
             "required": true
@@ -29,9 +33,9 @@
     "validations": [],
     "relations": {
         "category": {
-            "type": "hasOne",
+            "type": "belongsTo",
             "model": "category",
-            "foreignKey": "categoryId"
+            "foreignKey": ""
         },
         "account": {
             "type": "belongsTo",

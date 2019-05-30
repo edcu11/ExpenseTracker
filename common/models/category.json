@@ -16,7 +16,13 @@
         }
     },
     "validations": [],
-    "relations": {},
+    "relations": {
+        "expense": {
+            "type": "hasMany",
+            "model": "expense",
+            "foreignKey": "categoryId"
+        }
+    },
     "acls": [],
     "methods": {}
 }

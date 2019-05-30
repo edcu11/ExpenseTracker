@@ -6,6 +6,7 @@ let globalCurrentPage = 1;
 
 export const GetExpenses = (id) => (dispatch) => {
   let filter = BuildExpensesFilter(globalCurrentPage);
+  globalCurrentPage++;
   filter.where = { "accountId": id };
   return axios.get(`/Expenses?filter=${encodeURIComponent(JSON.stringify(filter))}`).then((response) => {
     return dispatch({ type: types.GET_EXPENSES, payload: response.data });
