@@ -7,12 +7,12 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
+const path = require('path');
 var app = module.exports = loopback();
 
 app.start = function() {
   // start the web server
-  app.use(loopback.static(path.resolve(__dirname, 'client/build')));
+  app.use(loopback.static(path.resolve(__dirname, 'client/dist')));
 
   return app.listen(function() {
     app.emit('started');

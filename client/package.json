@@ -5,6 +5,7 @@
   "engines": {
     "npm": ">=3"
   },
+  "proxy": "http://localhost:4000",
   "scripts": {
     "preinstall": "node tools/nodeVersionCheck.js",
     "start-message": "babel-node tools/startMessage.js",
@@ -24,8 +25,7 @@
     "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test:watch": "jest --watch",
     "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
-    "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
-    "heroku-postbuild": "npm run build"
+    "analyze-bundle": "babel-node ./tools/analyzeBundle.js"
   },
   "author": "Juan Venegas",
   "license": "MIT",
