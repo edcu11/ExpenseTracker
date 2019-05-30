@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { GetExpenses, BeginExpenses } from './actions';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Col, message, Spin, List, Divider } from 'antd';
+import ExpenseCard from './expenseCard';
 var moment = require('moment');
 
 
@@ -20,7 +21,7 @@ class Home extends Component {
 		this.props.beginExpenses(this.props.params.id).then( () => {
 			this.setState({
 				loading: false
-			})
+			});
 		});
 	}
 
@@ -69,7 +70,7 @@ class Home extends Component {
 
 	render() {
 		return (
-			<Col xs={23} sm={16} md={16} lg={10} >
+			<Col xs={23} sm={23} md={23} lg={23} >
 				<Spin spinning={this.state.loading}>
 					<div className="entryList">
 						<InfiniteScroll
@@ -82,10 +83,14 @@ class Home extends Component {
 								dataSource={this.props.expenses}
 								renderItem={(item, index) => {
 									let getDivider = this.getDivider(index);
+									console.log("items: ", item);
 									return (
 										<Col span={24} >
 											{getDivider}
-											{item.description}
+											<ExpenseCard
+												expense={item}
+												openEditModal={() => {}}
+											/>
 										</Col>
 									)
 								}}
@@ -104,7 +109,6 @@ Home.propTypes = {
 	params: PropTypes.object.isRequired,
 	getExpenses: PropTypes.func.isRequired,
 	beginExpenses: PropTypes.func.isRequired
-
 };
 
 const mapStateToProps = (state) => {

@@ -6,13 +6,6 @@ import { push } from 'react-router-redux';
 import moment from 'moment';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
 
-let reportMessages = getReportMessages(),
-    incomeMessages = getIncomeMessages()
-
-const messages = {
-    ...reportMessages,
-    ...incomeMessages
-};
 
 class ExpenseCard extends React.Component {
     constructor(props) {
@@ -42,13 +35,14 @@ class ExpenseCard extends React.Component {
     }
 
     getIconData = (condition) => {
-        let iconColor = '#f4a442';
-        let icon = "arrow-down";
-        let moneyIcon = "caret-down";
+        console.log("cond: ", condition);
+        let icon = "arrow-up";
+        let moneyIcon = "caret-up";
+        let iconColor = '#87d068';
         if (condition) {
-            icon = "arrow-up";
-            moneyIcon = "caret-up";
-            iconColor = '#87d068';
+            iconColor = '#f4a442';
+            icon = "arrow-down";
+            moneyIcon = "caret-down";
         }
         return { icon: icon, moneyIcon: moneyIcon, color: iconColor }
     }
@@ -58,29 +52,39 @@ class ExpenseCard extends React.Component {
     }
 
     displayTitle = (iconData) => {
-        let balanceIcon = this.getIconData(this.props.expense.balance > 0);
+        let balanceIcon = this.getIconData(parseInt(this.props.expense.balance) < 0);
         return (
             <div>
                 <Row>
-                    <Col lg={9} xs={6} md={6} sm={6}>
+                    <Col lg={4} xs={6} md={6} sm={6}>
                         <Ellipsis length={35} tooltip>{this.props.expense.description}</Ellipsis>
                     </Col>
-                    <Col lg={2} xs={2} md={2} sm={2}>
+                    <Col lg={4} xs={2} md={2} sm={2}>
                         {/* <Button onClick={this.openEdit} size="small" type="dashed" shape="circle" icon="edit" /> */}
                         <Icon type="edit" onClick={this.openEdit}></Icon>
                     </Col>
-                    <Col lg={5} xs={7} md={7} sm={5} className="ExpenseCardTitle">
+                    <Col lg={4} xs={7} md={7} sm={5} className="ExpenseCardTitle">
                         <Statistic
                             title="cantidad"
-                            value={this.props.expense.value}
+                            value={this.props.expense.amount}
                             precision={2}
                             valueStyle={{ color: iconData.color, fontSize: "17px" }}
                             prefix={<Icon viewBox="0 0 1024 1024" type={iconData.moneyIcon}>L</Icon>}
                         />
                     </Col>
-                    <Col className="ExpenseCardDescription" lg={5} xs={7} md={7} sm={5}>
+                    <Col className="ExpenseCardDescription" lg={4} xs={7} md={7} sm={5}>
                         <Statistic
-                            title="balance"
+                            title="Category Expense"
+                            value={this.props.expense.categoryBalance}
+                            precision={2}
+                            valueStyle={{ color: iconData.color, fontSize: "17px" }}
+                            prefix={<Icon viewBox="0 0 1024 1024" type={iconData.moneyIcon}>L</Icon>}
+                            suffix={`/ ${this.props.expense.category.expectedExpense}`}
+                        />
+                    </Col>
+                    <Col className="ExpenseCardDescription" lg={4} xs={7} md={7} sm={5}>
+                        <Statistic
+                            title="Account Balance"
                             value={this.props.expense.balance}
                             precision={2}
                             valueStyle={{ color: balanceIcon.color, fontSize: "17px" }}
@@ -128,7 +132,9 @@ class ExpenseCard extends React.Component {
     }
 
     render() {
-        let iconData = this.getIconData(this.props.expense.isIncome);
+        let iconData = this.getIconData(parseInt(this.props.expense.categoryBalance) > parseInt(this.props.expense.category.expectedExpense));
+
+        console.log("Vals: ", this.props.expense.categoryBalance ,"<", this.props.expense.category.expectedExpense, ": ", iconData)
         return (
             <div className="ExpenseCard">
                 <List.Item onDoubleClick={this.changeCardDisplay}>
@@ -146,9 +152,7 @@ class ExpenseCard extends React.Component {
 }
 
 ExpenseCard.propTypes = {
-    intl: PropTypes.object.isRequired,
     expense: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
     openEditModal: PropTypes.func.isRequired,
     goToPage: PropTypes.func.isRequired,
 };

@@ -38,7 +38,7 @@ export const CountExpenses = (id) => (dispatch) => {
 
 function BuildExpensesFilter(page = 1, pageSize = 10) {
   let filter = {
-    "include": ["category"],
+    "include": "category",
     "order": "date DESC",
     "limit": 10,
     "skip": (page - 1) * pageSize,

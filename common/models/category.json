@@ -12,7 +12,10 @@
         },
         "expectedExpense": {
             "type": "number",
-            "required": true
+            "required": true,
+            "postgresql": {
+                "dataType": "decimal"
+            }
         }
     },
     "validations": [],

@@ -17,6 +17,20 @@
                 "dataType": "decimal"
             }
         },
+        "balance": {
+            "type": "number",
+            "required": true,
+            "postgresql": {
+                "dataType": "decimal"
+            }
+        },
+        "categoryBalance": {
+            "type": "number",
+            "required": true,
+            "postgresql": {
+                "dataType": "decimal"
+            }
+        },
         "date": {
             "type": "date",
             "required": true
