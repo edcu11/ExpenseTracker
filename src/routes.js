@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import MainLayout from './features/layouts/main';
 import EmptyLayout from './features/layouts/empty';
 import NotFoundPage from './features/NotFound';
 import HomePage from './features/Home';

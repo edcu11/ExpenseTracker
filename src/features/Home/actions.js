@@ -2,18 +2,16 @@ import * as types from './actionTypes';
 import axios from 'axios';
 
 
-let globalCurrentPage = 1;
+// let globalCurrentPage = 1;
 
 export const GetExpenses = () => (dispatch) => {
-  let filter = BuildExpensesFilter(globalCurrentPage);
+  // let filter = BuildExpensesFilter(globalCurrentPage);
   return axios.get(`/Expenses`).then((response) => {
-    console.log("expenses: ", response)
     return dispatch({ type: types.GET_EXPENSES, payload: response.data });
   })
 };
 
-export const getCategories = (value) => (dispatch) => {
-  console.log("valeu: ", value)
+export const getCategories = () => (dispatch) => {
   return dispatch({ type: types.GET_CATEGORIES });
 }
 
@@ -31,17 +29,16 @@ export const CountExpenses = (id) => (dispatch) => {
   let filter = (id !== null) ? { "where": { "bankId": id } } : {};
   return axios.get(`/Expenses/count?where=${encodeURIComponent(JSON.stringify(filter.where))}`)
     .then((response) => {
-      console.log("count: ", response);
       dispatch({ type: types.GET_EXPENSES_COUNT, count: response.data.count })
     });
 };
 
-function BuildExpensesFilter(page = 1, pageSize = 10) {
-  let filter = {
-    "include": ["category"],
-    "order": "date DESC",
-    "limit": 10,
-    "skip": (page - 1) * pageSize,
-  };
-  return filter;
-}
+// function BuildExpensesFilter(page = 1, pageSize = 10) {
+//   let filter = {
+//     "include": ["category"],
+//     "order": "date DESC",
+//     "limit": 10,
+//     "skip": (page - 1) * pageSize,
+//   };
+//   return filter;
+// }

@@ -13,15 +13,11 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		console.log("those: ", this.props);
 
-		this.props.beginExpenses().then((expensesList) => {
-			console.log("expenses: ", expensesList)
-		});
+		this.props.beginExpenses();
 	}
 
 	changeText = () => {
-		console.log("state: ", this.state, "\n props: ", this.props);
 	}
 
 	render() {

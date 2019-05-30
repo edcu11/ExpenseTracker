@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Affix, Menu, Icon } from 'antd';
+import { Menu, Icon, Layout } from 'antd';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
 // main layout imports
-import { Layout } from 'antd';
 const { Content } = Layout;
 
 class Empty extends Component {
 
 	handleClick = (item) => {
-		console.log("item: ", item, this);
 		let view = (item.key == "home") ? "" : item.key;
 		this.props.goToPage(`/${view}`);
 	};
@@ -22,7 +20,7 @@ class Empty extends Component {
 				<Menu.Item key="about">
 					<Icon type="appstore" />
 					Accounts
-			  	</Menu.Item>
+				</Menu.Item>
 				<Menu.Item key="expenses">
 					<Icon type="bank" />
 					Expenses
