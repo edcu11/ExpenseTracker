@@ -7,7 +7,11 @@ class NotFound extends Component {
 	}
 	render() {
 		return (
-			<Empty />
+			<div>
+				holaaa
+				<Empty />
+			</div>
+
 		);
 	}
 }

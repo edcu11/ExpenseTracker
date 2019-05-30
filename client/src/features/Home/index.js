@@ -8,23 +8,22 @@ import { GetExpenses, BeginExpenses } from './actions';
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		}
+	
 	}
 
 	componentDidMount() {
-
 		this.props.beginExpenses();
 	}
 
 	changeText = () => {
+		console.log("home props: ", this.props)
 	}
 
 	render() {
 		return (
 			<div>
-				Home Page amigos
-				<button onClick={this.changeText} > adios {this.state.result} </button>
+				Home amigos
+				<button onClick={this.changeText} > adios  </button>
 			</div>
 		);
 	}
@@ -33,6 +32,7 @@ class Home extends Component {
 Home.propTypes = {
 	expenses: PropTypes.array.isRequired,
 	expensesCount: PropTypes.number.isRequired,
+	account: PropTypes.number.isRequired,
 	getExpenses: PropTypes.func.isRequired,
 	beginExpenses: PropTypes.func.isRequired
 
@@ -41,7 +41,8 @@ Home.propTypes = {
 const mapStateToProps = (state) => {
 	return {
 		expenses: state.home.expenses,
-		expensesCount: state.home.expensesCount
+		expensesCount: state.home.expensesCount,
+		account: state.accounts.accountId
 	};
 }
 
