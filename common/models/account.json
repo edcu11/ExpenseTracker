@@ -26,7 +26,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "expenses": {
+      "type": "hasMany",
+      "model": "expense",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -7,17 +7,12 @@ import {
 
 const initState = {
     accounts: [],
-    accountId: 0
 };
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
         case types.GET_ACCOUNTS:
             return { ...state, accounts: [...action.payload] };
-        case types.CLEAR_ACCOUNTS:
-            return { ...state, accounts: [] };
-        case types.SELECT_ACCOUNT:
-            return { ...state, accountId: action.id };
         case CLEAN_REDUCER:
             return initState;
         case CLEAR_SESSION:

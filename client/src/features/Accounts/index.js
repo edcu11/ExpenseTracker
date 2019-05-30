@@ -6,6 +6,8 @@ import { List, Statistic, Card, Icon, Col, message, Tag, Row, Modal } from 'antd
 import { getAvatars } from '../../utils/images';
 import addImage from '../../images/add.png';
 import AccountModal from './accountModal';
+import {push} from 'react-router-redux';
+
 const confirm = Modal.confirm;
 
 class AccountsPage extends Component {
@@ -22,14 +24,9 @@ class AccountsPage extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getAccounts().then(() => {
-			console.log("ACCOUTNS:", this.props);
-		});
+		this.props.getAccounts();
 	}
 
-	handleClick = () => {
-		console.log("Acco: ", this.props);
-	}
 
 	getIconData = (condition) => {
 		let icon = "arrow-up";
@@ -62,9 +59,9 @@ class AccountsPage extends Component {
 		return <img src={this.state.avatars[index]} alt="Logo" />
 	}
 
-	handleCardPick = (id) => {
+	handleCardPick = (account) => {
 		// console.log("my props: ", this.props);
-		this.props.selectAccount(id);
+		this.props.goToPage(`/accounts/${account.id}`);
 	}
 
 	showAddModal = () => {
@@ -111,18 +108,18 @@ class AccountsPage extends Component {
 
 	showDeleteConfirm = (item) => {
 		let deleteConfirm = this.props.deleteAccount;
-	
+
 		confirm({
 			title: `Should ${item.username} be deleted`,
 			content: 'All related expenses will be deleted',
 			okText: 'Yes',
 			okType: 'danger',
 			cancelText: 'No',
-			onOk () {
+			onOk() {
 				deleteConfirm(item.id)
 			},
 			onCancel() {
-			
+
 			},
 		});
 	}
@@ -144,7 +141,7 @@ class AccountsPage extends Component {
 						grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
 						dataSource={dataSource}
 						renderItem={(item, index) => (
-							<List.Item onDoubleClick={() => this.handleCardPick(item.id)}>
+							<List.Item onClick={() => this.handleCardPick(item)}>
 								<Card
 									bordered
 									hoverable
@@ -191,10 +188,10 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
 	return {
 		getAccounts: () => dispatch(GetAccounts()),
-		selectAccount: (id) => dispatch(SelectAccount(id)),
 		createAccount: (data) => dispatch(CreateAccount(data)),
 		editAccount: (data, oldData) => dispatch(EditAccount(data, oldData)),
-		deleteAccount: (id) => dispatch(DeleteAccount(id))
+		deleteAccount: (id) => dispatch(DeleteAccount(id)),
+		goToPage: (location) => { dispatch(push(location)); }
 	};
 }
 

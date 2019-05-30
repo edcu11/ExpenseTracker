@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GetExpenses, BeginExpenses } from './actions';
 
-
-
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +10,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.beginExpenses();
+		this.props.beginExpenses(this.props.params.id);
 	}
 
 	changeText = () => {
@@ -32,7 +30,7 @@ class Home extends Component {
 Home.propTypes = {
 	expenses: PropTypes.array.isRequired,
 	expensesCount: PropTypes.number.isRequired,
-	account: PropTypes.number.isRequired,
+	params: PropTypes.object.isRequired,
 	getExpenses: PropTypes.func.isRequired,
 	beginExpenses: PropTypes.func.isRequired
 
@@ -42,14 +40,13 @@ const mapStateToProps = (state) => {
 	return {
 		expenses: state.home.expenses,
 		expensesCount: state.home.expensesCount,
-		account: state.accounts.accountId
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		beginExpenses: () => dispatch(BeginExpenses()),
-		getExpenses: () => dispatch(GetExpenses())
+		beginExpenses: (id) => dispatch(BeginExpenses(id)),
+		getExpenses: (id) => dispatch(GetExpenses(id))
 	};
 }
 

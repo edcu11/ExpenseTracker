@@ -9,9 +9,10 @@ import AccountsPage from './features/Accounts';
 export default (
 	<Route>
 		<Route path="/" component={EmptyLayout}>
-			<IndexRoute component={AccountsPage} />
-			<Route path="/Accounts" component={AccountsPage} />
-			<Route path="/expenses" component={HomePage} />
+			<Route path="/Accounts" >
+				<IndexRoute component={AccountsPage} />
+				<Route path=":id" component={HomePage} />
+			</Route>
 		</Route>
 		<Route path="*" component={NotFoundPage} />
 	</Route>

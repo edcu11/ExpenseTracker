@@ -32,6 +32,11 @@
             "type": "hasOne",
             "model": "category",
             "foreignKey": "categoryId"
+        },
+        "account": {
+            "type": "belongsTo",
+            "model": "account",
+            "foreignKey": ""
         }
     },
     "acls": [],
