@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Empty } from 'antd';
 
 class NotFound extends Component {
 	constructor(props) {
@@ -8,10 +8,8 @@ class NotFound extends Component {
 	}
 	render() {
 		return (
-			<div>
-				Not Found Page
-			</div>
-			);
+			<Empty />
+		);
 	}
 }
 

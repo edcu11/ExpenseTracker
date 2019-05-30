@@ -10,10 +10,9 @@ import AboutPage from './features/About';
 export default (
 	<Route>
 		<Route path="/" component={EmptyLayout}>
-			<IndexRoute component={HomePage} />
-		</Route>
-		<Route component={MainLayout}>
+			<IndexRoute component={AboutPage} />
 			<Route path="/about" component={AboutPage} />
+			<Route path="/expenses" component={HomePage} />
 		</Route>
 		<Route path="*" component={NotFoundPage} />
 	</Route>

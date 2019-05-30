@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GetExpenses, BeginExpenses } from './actions';
 
+
+
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -11,7 +13,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		console.log("thos: ", this.props);
+		console.log("those: ", this.props);
 
 		this.props.beginExpenses().then((expensesList) => {
 			console.log("expenses: ", expensesList)
@@ -21,7 +23,6 @@ class Home extends Component {
 	changeText = () => {
 		console.log("state: ", this.state, "\n props: ", this.props);
 	}
-
 
 	render() {
 		return (
@@ -42,7 +43,6 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-	console.log("state: ", state);
 	return {
 		expenses: state.home.expenses,
 		expensesCount: state.home.expensesCount

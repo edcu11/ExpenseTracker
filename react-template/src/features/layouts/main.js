@@ -6,13 +6,14 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 	}
+
+
 	render() {
 		return (
 			<div>
-				Main
-			{...this.props.children}
+				{...this.props.children}
 			</div>
-			);
+		);
 	}
 }
 
