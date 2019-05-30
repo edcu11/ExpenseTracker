@@ -15,6 +15,8 @@ export const getCategories = () => (dispatch) => {
   return dispatch({ type: types.GET_CATEGORIES });
 }
 
+
+
 export const ClearExpenses = () => (dispatch) => {
   dispatch({ type: types.CLEAR_EXPENSES });
 };
