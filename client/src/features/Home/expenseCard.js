@@ -35,7 +35,6 @@ class ExpenseCard extends React.Component {
     }
 
     getIconData = (condition) => {
-        console.log("cond: ", condition);
         let icon = "arrow-up";
         let moneyIcon = "caret-up";
         let iconColor = '#87d068';
@@ -68,8 +67,8 @@ class ExpenseCard extends React.Component {
                             title="cantidad"
                             value={this.props.expense.amount}
                             precision={2}
-                            valueStyle={{ color: iconData.color, fontSize: "17px" }}
-                            prefix={<Icon viewBox="0 0 1024 1024" type={iconData.moneyIcon}>L</Icon>}
+                            valueStyle={{ color: '#71a9bc', fontSize: "21px" }}
+                            prefix={<Icon viewBox="0 0 1024 1024" type={'minus'}>L</Icon>}
                         />
                     </Col>
                     <Col className="ExpenseCardDescription" lg={4} xs={7} md={7} sm={5}>
@@ -77,7 +76,7 @@ class ExpenseCard extends React.Component {
                             title="Category Expense"
                             value={this.props.expense.categoryBalance}
                             precision={2}
-                            valueStyle={{ color: iconData.color, fontSize: "17px" }}
+                            valueStyle={{ color: iconData.color, fontSize: "21px" }}
                             prefix={<Icon viewBox="0 0 1024 1024" type={iconData.moneyIcon}>L</Icon>}
                             suffix={`/ ${this.props.expense.category.expectedExpense}`}
                         />
@@ -87,7 +86,7 @@ class ExpenseCard extends React.Component {
                             title="Account Balance"
                             value={this.props.expense.balance}
                             precision={2}
-                            valueStyle={{ color: balanceIcon.color, fontSize: "17px" }}
+                            valueStyle={{ color: balanceIcon.color, fontSize: "21px" }}
                             prefix={<Icon viewBox="0 0 1024 1024" type={balanceIcon.moneyIcon}>L</Icon>}
                         />
                     </Col>
@@ -104,19 +103,7 @@ class ExpenseCard extends React.Component {
         if (this.state.showComplete)
             return (
                 <div>
-                    <Row>
-                        <Col span={24}>
-                            ({formattedexpenseDate}): {this.props.expense.extraDetail}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}>
-                            {this.props.intl.formatMessage({ ...messages.refNumber })}: {this.props.expense.referenceNumber}
-                        </Col>
-                    </Row>
-                    <Row >
-                        {this.displayDetails()}
-                    </Row>
+                  
                 </div>
             )
         return (<div>
@@ -133,8 +120,6 @@ class ExpenseCard extends React.Component {
 
     render() {
         let iconData = this.getIconData(parseInt(this.props.expense.categoryBalance) > parseInt(this.props.expense.category.expectedExpense));
-
-        console.log("Vals: ", this.props.expense.categoryBalance ,"<", this.props.expense.category.expectedExpense, ": ", iconData)
         return (
             <div className="ExpenseCard">
                 <List.Item onDoubleClick={this.changeCardDisplay}>
@@ -153,6 +138,7 @@ class ExpenseCard extends React.Component {
 
 ExpenseCard.propTypes = {
     expense: PropTypes.object.isRequired,
+    account: PropTypes.object.isRequired,
     openEditModal: PropTypes.func.isRequired,
     goToPage: PropTypes.func.isRequired,
 };

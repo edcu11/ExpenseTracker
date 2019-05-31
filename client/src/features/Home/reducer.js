@@ -9,6 +9,7 @@ const initState = {
     expenses: [],
     categories: [],
     expensesCount: 0,
+    account: {}
 };
 
 const reducer = (state = initState, action) => {
@@ -21,6 +22,8 @@ const reducer = (state = initState, action) => {
             return { ...state, expenses: [] };
         case types.GET_EXPENSES_COUNT:
             return { ...state, expensesCount: action.count };
+        case types.GET_ACCOUNT:
+            return { ...state, account: action.payload };
         case CLEAN_REDUCER:
             return initState;
         case CLEAR_SESSION:

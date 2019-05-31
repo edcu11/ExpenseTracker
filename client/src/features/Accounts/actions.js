@@ -12,19 +12,19 @@ export const GetAccounts = () => (dispatch) => {
 };
 
 export const CreateAccount = (data) => (dispatch) => {
-  return axios.post(`/accounts`, data).then((response) => {
+  return axios.post(`/accounts`, data).then(() => {
     return dispatch(GetAccounts());
   });
 };
 
 export const EditAccount = (data, oldData) => (dispatch) => {
-  return axios.patch(`/accounts/${oldData.id}`, data).then((response) => {
+  return axios.patch(`/accounts/${oldData.id}`, data).then(() => {
     return dispatch(GetAccounts());
   });
 };
 
 export const DeleteAccount = (id) => (dispatch) => {
-  return axios.delete(`/accounts/${id}`).then((response) => {
+  return axios.delete(`/accounts/${id}`).then(() => {
     return dispatch(GetAccounts());
   });
 };

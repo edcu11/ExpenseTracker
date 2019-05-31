@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { GetAccounts, SelectAccount, CreateAccount, EditAccount, DeleteAccount } from './actions';
-import { List, Statistic, Card, Icon, Col, message, Tag, Row, Modal } from 'antd';
+import { GetAccounts, CreateAccount, EditAccount, DeleteAccount } from './actions';
+import { List, Statistic, Card, Icon, Col, message, Modal } from 'antd';
 import { getAvatars } from '../../utils/images';
 import addImage from '../../images/add.png';
 import AccountModal from './accountModal';
-import {push} from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 const confirm = Modal.confirm;
 
@@ -74,7 +74,6 @@ class AccountsPage extends Component {
 	}
 
 	showEditModal = (selectedAccount) => {
-		console.log("selectd: ", selectedAccount);
 		this.setState({
 			showCreateModal: true,
 			submitAction: this.editAccount,
@@ -94,8 +93,7 @@ class AccountsPage extends Component {
 	editAccount = (accountData) => {
 		this.props.editAccount(accountData, this.state.accountData).then(() => {
 			message.success(`Edited Succesfully!`);
-		}).catch((e) => {
-			console.log("eror: ", e)
+		}).catch(() => {
 			message.error(`Error editing account!`)
 		});
 	}
@@ -177,6 +175,8 @@ AccountsPage.propTypes = {
 	getAccounts: PropTypes.func.isRequired,
 	createAccount: PropTypes.func.isRequired,
 	editAccount: PropTypes.func.isRequired,
+	goToPage: PropTypes.func.isRequired,
+	deleteAccount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {

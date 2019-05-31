@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { GetAccounts, SelectAccount } from './actions';
-import { InputNumber, Input, Modal, Icon, Col, Form, Row, Button } from 'antd';
+import { InputNumber, Input, Modal, Icon, Form, Row, Button } from 'antd';
 
 class AccountModal extends Component {
 	constructor(props) {
@@ -38,7 +36,6 @@ class AccountModal extends Component {
 	}
 
 	render() {
-		console.log("modal: ", this.props);
 		const { getFieldDecorator } = this.props.form;
 
 		return (
@@ -51,10 +48,10 @@ class AccountModal extends Component {
 				footer={
 					<div>
 						<Button key="cancel" type="default" size="default" onClick={this.closeModal}>
-							CANCEL
+							cancel
 						</Button>
 						<Button key="submit" type="primary" size="default" onClick={this.submit}>
-							ACCEPT
+							accept
 						</Button>
 					</div>
 				}
@@ -106,6 +103,7 @@ class AccountModal extends Component {
 AccountModal.propTypes = {
 	accountData: PropTypes.object,
 	showModal: PropTypes.bool.isRequired,
+    form: PropTypes.object.isRequired,
 	submitAccount: PropTypes.func.isRequired,
 	cancelModal: PropTypes.func.isRequired
 

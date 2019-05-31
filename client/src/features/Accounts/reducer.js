@@ -6,7 +6,7 @@ import {
 } from '../../constants/actionTypes';
 
 const initState = {
-    accounts: [],
+    accounts: []
 };
 
 const reducer = (state = initState, action) => {

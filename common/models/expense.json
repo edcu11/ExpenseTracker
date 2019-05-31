@@ -55,6 +55,11 @@
             "type": "belongsTo",
             "model": "account",
             "foreignKey": ""
+        },
+        "descriptions": {
+            "type": "hasMany",
+            "model": "description",
+            "foreignKey": "expenseId"
         }
     },
     "acls": [],

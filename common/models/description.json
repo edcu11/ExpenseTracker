@@ -1,0 +1,32 @@
+{
+    "name": "description",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {
+        "id": {
+            "type": "number",
+            "required": true
+        },
+        "description": {
+            "type": "string",
+            "required": false
+        },
+        "expenseId": {
+            "type": "number",
+            "required": true
+        }
+    },
+    "validations": [],
+    "relations": {
+        "expense": {
+            "type": "belongsTo",
+            "model": "expense",
+            "foreignKey": ""
+        }
+    },
+    "acls": [],
+    "methods": {}
+}

@@ -13,8 +13,19 @@ export const GetExpenses = (id) => (dispatch) => {
   })
 };
 
-export const getCategories = () => (dispatch) => {
-  return dispatch({ type: types.GET_CATEGORIES });
+export const CreateExpense = (expense, descriptions) => (dispatch) => {
+  return axios.post(`/Expenses/createExpense`, expense, descriptions).then( () => {
+    dispatch(BeginExpenses(expense.accountId))
+  });
+};
+
+
+
+export const GetCategories = () => (dispatch) => {
+  return axios.get(`/categories`)
+    .then((response) => {
+      dispatch({ type: types.GET_CATEGORIES, payload: response.data })
+    });
 }
 
 export const ClearExpenses = () => (dispatch) => {
@@ -25,8 +36,19 @@ export const BeginExpenses = (id) => (dispatch) => {
   globalCurrentPage = 1;
   dispatch(ClearExpenses());
   dispatch(CountExpenses(id));
+  dispatch(GetAccount(id));
   return dispatch(GetExpenses(id));
 };
+
+export const GetAccount = (id) => (dispatch) => {
+  let filter = (id !== null) ? 
+  { "where": { "id": id }, "limit": 1 } : {};
+  return axios.get(`/accounts?filter=${encodeURIComponent(JSON.stringify(filter))}`)
+    .then((response) => {
+      dispatch({ type: types.GET_ACCOUNT, payload: response.data[0] })
+    });
+};
+
 
 export const CountExpenses = (id) => (dispatch) => {
   let filter = (id !== null) ? { "where": { "accountId": id } } : {};
@@ -38,7 +60,7 @@ export const CountExpenses = (id) => (dispatch) => {
 
 function BuildExpensesFilter(page = 1, pageSize = 10) {
   let filter = {
-    "include": "category",
+    "include": ["category", "descriptions"],
     "order": "date DESC",
     "limit": 10,
     "skip": (page - 1) * pageSize,
