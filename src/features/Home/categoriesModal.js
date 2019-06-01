@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputNumber, Input, Drawer, Icon, Form, Row, Button, Col, Descriptions, Divider } from 'antd';
+import { InputNumber, message, Input, Drawer, Icon, Form, Row, Button, Col, Descriptions, Divider, Statistic } from 'antd';
 import { CreateCategory } from './actions';
 import { connect } from 'react-redux';
 
@@ -31,12 +31,26 @@ class CategoriesDrawer extends Component {
 		this.props.form.validateFields({ force: true }, (err, values) => {
 			if (err)
 				return;
-			this.props.createCategory(values);
+			this.props.createCategory(values).then(() => {
+				message.success(`Created Category Succesfully!`);
+			}).catch(() => {
+				message.error(`Error creating Category!`)
+			});
 			this.closeModal();
 		});
-
 	}
 
+	getIconData = (condition) => {
+        let icon = "arrow-up";
+        let moneyIcon = "caret-up";
+        let iconColor = '#87d068';
+        if (condition) {
+            iconColor = '#f4a442';
+            icon = "arrow-down";
+            moneyIcon = "caret-down";
+        }
+        return { icon: icon, moneyIcon: moneyIcon, color: iconColor }
+    }
 
 	amountValidator = (rule, value, callback) => {
 		if (!value > 0)
@@ -53,6 +67,7 @@ class CategoriesDrawer extends Component {
 					Categories
                 </Button>
 				<Drawer
+					destroyOnClose
 					title="Add Category"
 					width={520}
 					onClose={this.closeModal}
@@ -111,11 +126,23 @@ class CategoriesDrawer extends Component {
 							</Col>
 						</Row>
 					</Row>
-					<Divider/>
+					<Divider />
 					<Row gutter={16}>
 						<Descriptions bordered title="Categories" border column={1} size={this.state.size}>
-							{this.props.categories.map( (category) => {
-								return <Descriptions.Item key={category.id} label={category.name}> {category.expectedExpense} </Descriptions.Item>
+							{this.props.categories.map((category) => {
+								let lastExpense = this.props.findLastCategoryExpense(category.id);
+								lastExpense = lastExpense ? lastExpense : { categoryBalance: 0 };
+								let iconData = this.getIconData(parseInt(category.expectedExpense) < parseInt(lastExpense.categoryBalance))
+								return (<Descriptions.Item key={category.id} label={category.name}>
+									{/* $ {category.expectedExpense} */}
+									<Statistic
+										title="Category Expense"
+										value={lastExpense.categoryBalance}
+										precision={2}
+										valueStyle={{ color: iconData.color, fontSize: "14px" }}
+										suffix={`/ ${category.expectedExpense}`}
+									/>
+								</Descriptions.Item>)
 							})}
 						</Descriptions>
 					</Row>
@@ -127,19 +154,16 @@ class CategoriesDrawer extends Component {
 }
 
 CategoriesDrawer.propTypes = {
+	expenses: PropTypes.array.isRequired,
 	categories: PropTypes.array.isRequired,
 	form: PropTypes.object.isRequired,
+	findLastCategoryExpense: PropTypes.func.isRequired,
+	createCategory: PropTypes.func.isRequired
 };
 
-// const mapStateToProps = (state) => {
-// 	return {
-// 		categories: state.categories.categories,
-// 	};
-// }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		getCategories: () => dispatch(GetCategories()),
 		createCategory: (categoryData) => dispatch(CreateCategory(categoryData)),
 	};
 }

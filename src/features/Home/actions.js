@@ -70,7 +70,6 @@ export const GetCategories = () => (dispatch) => {
 }
 
 export const CreateCategory = (data) => (dispatch) => {
-  console.log("pendek:", data)
   return axios.post(`/categories`, data).then(() => {
     dispatch(GetCategories());
   });

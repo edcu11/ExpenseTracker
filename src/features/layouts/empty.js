@@ -21,10 +21,6 @@ class Empty extends Component {
 					<Icon type="appstore" />
 					Accounts
 				</Menu.Item>
-				<Menu.Item key="expenses">
-					<Icon type="bank" />
-					Expenses
-				</Menu.Item>
 			</Menu>
 		);
 	}

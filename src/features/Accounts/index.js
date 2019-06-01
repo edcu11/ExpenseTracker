@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GetAccounts, CreateAccount, EditAccount, DeleteAccount } from './actions';
-import { List, Statistic, Card, Icon, Col, message, Modal } from 'antd';
+import { List, Statistic, Card, Icon, Col, Row, message, Modal } from 'antd';
 import { getAvatars } from '../../utils/images';
 import addImage from '../../images/add.png';
 import AccountModal from './accountModal';
@@ -56,7 +56,7 @@ class AccountsPage extends Component {
 	}
 
 	getIndexAvatar = (index) => {
-		return <img src={this.state.avatars[index]} alt="Logo" />
+		return <img src={this.state.avatars[index % 6]} alt="Logo" />
 	}
 
 	handleCardPick = (account) => {
@@ -127,32 +127,34 @@ class AccountsPage extends Component {
 	render() {
 		let dataSource = this.props.accounts ? this.props.accounts : [];
 		return (
-			<div>
+			<Row className={"accountList"} gutter={16}>
 				<AccountModal
 					showModal={this.state.showCreateModal}
 					accountData={this.state.accountData}
 					submitAccount={this.state.submitAction}
 					cancelModal={this.closeAccountModal}
 				/>
-				<Col lg={22} xs={22} md={22} sm={22}>
+				<Col lg={18} xs={22} md={22} sm={22}>
 					<List
 						grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
 						dataSource={dataSource}
 						renderItem={(item, index) => (
-							<List.Item onDoubleClick={() => this.handleCardPick(item)}>
-								<Card
-									bordered
-									hoverable
-									style={{ width: 200, height: 200 }}
-									actions={[
-										<a key="action" onClick={() => { return this.showEditModal(item) }} > <Icon type="edit" theme="outlined" /></a>,
-										<a key="action" onClick={() => { return this.showDeleteConfirm(item) }} >  <Icon type="delete" theme="outlined" /></a>,
-									]}
-									cover={this.getIndexAvatar(index)}
-								>
-									<Card.Meta title={item.username} description={this.getBalanceStatistic(item)} />
-								</Card>
-							</List.Item>
+							<Col span={5}>
+								<List.Item onDoubleClick={() => this.handleCardPick(item)}>
+									<Card
+										bordered
+										hoverable
+										style={{ width: 200, height: 200 }}
+										actions={[
+											<a key="action" onClick={() => { return this.showEditModal(item) }} > <Icon type="edit" theme="outlined" /></a>,
+											<a key="action" onClick={() => { return this.showDeleteConfirm(item) }} >  <Icon type="delete" theme="outlined" /></a>,
+										]}
+										cover={this.getIndexAvatar(index)}
+									>
+										<Card.Meta title={item.username} description={this.getBalanceStatistic(item)} />
+									</Card>
+								</List.Item>
+							</Col>
 						)}
 					/>
 				</Col>
@@ -165,7 +167,7 @@ class AccountsPage extends Component {
 					>
 					</Card>
 				</Col>
-			</div>
+			</Row >
 		);
 	}
 }

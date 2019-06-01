@@ -88,11 +88,12 @@ class ExpenseModal extends Component {
 
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
+                                            style={{ width: '100%' }}
                                             placeholder="Select a category"
                                             optionFilterProp="children"
-                                            filterOption={(input, option) =>
-                                                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                            filterOption={(input, option) => {
+                                                return option.props.children[1].toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                            }
                                             }
                                         >
                                             {this.props.categories.map((cat) =>
@@ -117,7 +118,7 @@ class ExpenseModal extends Component {
                                         initialValue: this.props.expenseData.initialAmount,
                                     })(
                                         <InputNumber
-                                            style={{width:"90%"}}
+                                            style={{ width: "90%" }}
                                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                             size="large"

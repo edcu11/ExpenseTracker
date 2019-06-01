@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Col, Row, Icon, Skeleton, Avatar, List, Statistic } from 'antd';
+import { Col, Row, Icon, Skeleton, Avatar, List, Statistic, Timeline } from 'antd';
 import { connect } from "react-redux";
 import React from 'react';
 import { push } from 'react-router-redux';
@@ -13,6 +13,7 @@ class ExpenseCard extends React.Component {
         this.state = {
             isLoading: false,
             showComplete: false,
+            descriptionIcons: [ "green", "red", "yellow", "red", "yellow"]
         }
     }
 
@@ -55,14 +56,10 @@ class ExpenseCard extends React.Component {
         return (
             <div>
                 <Row>
-                    <Col lg={4} xs={6} md={6} sm={6}>
+                    <Col lg={8} xs={6} md={6} sm={6}>
                         <Ellipsis length={35} tooltip>{this.props.expense.category.name}</Ellipsis>
                     </Col>
-                    <Col lg={4} xs={2} md={2} sm={2}>
-                        {/* <Button onClick={this.openEdit} size="small" type="dashed" shape="circle" icon="edit" /> */}
-                        <Icon type="edit" onClick={this.openEdit}></Icon>
-                    </Col>
-                    <Col lg={4} xs={7} md={7} sm={5} className="ExpenseCardTitle">
+                    <Col lg={5} xs={7} md={7} sm={5} className="ExpenseCardTitle">
                         <Statistic
                             title="cantidad"
                             value={this.props.expense.amount}
@@ -71,7 +68,7 @@ class ExpenseCard extends React.Component {
                             prefix={<Icon viewBox="0 0 1024 1024" type={'minus'}>L</Icon>}
                         />
                     </Col>
-                    <Col className="ExpenseCardDescription" lg={4} xs={7} md={7} sm={5}>
+                    <Col className="ExpenseCardDescription" lg={5} xs={7} md={7} sm={5}>
                         <Statistic
                             title="Category Expense"
                             value={this.props.expense.categoryBalance}
@@ -81,7 +78,7 @@ class ExpenseCard extends React.Component {
                             suffix={`/ ${this.props.expense.category.expectedExpense}`}
                         />
                     </Col>
-                    <Col className="ExpenseCardDescription" lg={4} xs={7} md={7} sm={5}>
+                    <Col className="ExpenseCardDescription" lg={5} xs={7} md={7} sm={5}>
                         <Statistic
                             title="Account Balance"
                             value={this.props.expense.balance}
@@ -90,7 +87,7 @@ class ExpenseCard extends React.Component {
                             prefix={<Icon viewBox="0 0 1024 1024" type={balanceIcon.moneyIcon}>L</Icon>}
                         />
                     </Col>
-                    <Col lg={2} xs={2} md={2} sm={2} style={{ paddingTop: "3px" }}>
+                    <Col lg={1} xs={2} md={2} sm={2} style={{ paddingTop: "3px" }}>
                         <a>{this.ShowMoreIcon()}</a>
                     </Col>
                 </Row>
@@ -102,13 +99,14 @@ class ExpenseCard extends React.Component {
         let formattedexpenseDate = moment(this.props.expense.date).format('YYYY/MM/DD');
         if (this.state.showComplete)
             return (
-                <div>
-                  
-                </div>
+                <Timeline>
+                    {this.props.expense.descriptions.map( (desc) => {
+                        return <Timeline.Item key={desc.id} color={this.state.descriptionIcons[desc.type]} >{desc.description}</Timeline.Item>
+                    })}
+                </Timeline>
             )
         return (<div>
             {formattedexpenseDate}
-
         </div>)
     }
 

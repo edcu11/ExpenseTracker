@@ -52,23 +52,16 @@ class Home extends Component {
 		expense.categoryBalance = parseInt((lastExpense ? lastExpense.categoryBalance : 0)) + expense.amount;
 	}
 
-	findLastECategoryExpense = (categoryId) => {
-		return this.props.expenses.find((e) => {
-			return e.categoryId === categoryId;
-		});
-	}
-
-	findLastECategoryExpense = (categoryId) => {
+	findLastCategoryExpense = (categoryId) => {
 		return this.props.expenses.find((e) => {
 			return e.categoryId === categoryId;
 		});
 	}
 
 	createExpense = (expenseData) => {
-		let lastExpense = this.findLastECategoryExpense(expenseData.categoryId);
+		let lastExpense = this.findLastCategoryExpense(expenseData.categoryId);
 		this.defineBalances(expenseData, lastExpense);
 		let descriptions = GenerateReport(expenseData, this.props.account, this.props.findCategory(expenseData.categoryId));
-		console.log("after: ", expenseData, descriptions);
 		this.props.createExpense(expenseData, descriptions).then(() => {
 			message.success(`Created Succesfully!`);
 		}).catch(() => {
@@ -115,19 +108,19 @@ class Home extends Component {
 		return this.props.expenses.length < this.props.expensesCount;
 	}
 
-	isDiffMonth = (index) => {
+	isDiffDay = (index) => {
 		if (index === 0)
 			return true;
 		let entry = this.props.expenses[index].date;
 		let lastEntry = this.props.expenses[index - 1].date;
-		return moment(lastEntry).isAfter(moment(entry), 'month');
+		return moment(lastEntry).isAfter(moment(entry), 'day');
 	}
 
 	getDivider = (index) => {
-		if (this.isDiffMonth(index))
+		if (this.isDiffDay(index))
 			return (
 				<Divider dashed>
-					{moment(this.props.expenses[index].date).format('MMMM')}
+					{moment(this.props.expenses[index].date).format('dddd, MMMM Do')}
 				</Divider>
 			)
 		return (<div></div>)
@@ -147,6 +140,7 @@ class Home extends Component {
 								useWindow={false}
 							>
 								<List
+									className="expensesList"
 									dataSource={this.props.expenses}
 									renderItem={(item, index) => {
 										let getDivider = this.getDivider(index);
@@ -178,6 +172,8 @@ class Home extends Component {
 						/>
 						<CategoriesDrawer
 							categories={this.props.categories}
+							expenses={this.props.expenses}
+							findLastCategoryExpense={this.findLastCategoryExpense}
 						/>
 					</Col>
 				</Row>
@@ -194,7 +190,10 @@ Home.propTypes = {
 	expensesCount: PropTypes.number.isRequired,
 	params: PropTypes.object.isRequired,
 	getExpenses: PropTypes.func.isRequired,
-	beginExpenses: PropTypes.func.isRequired
+	beginExpenses: PropTypes.func.isRequired,
+	findCategory: PropTypes.func.isRequired,
+	getCategories: PropTypes.func.isRequired,
+	createExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

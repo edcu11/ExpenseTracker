@@ -13,7 +13,7 @@ import App from './App';
 import axios from 'axios';
 
 // axios.defaults.baseURL = "http://edgar-env-1.gvdjpyrbgd.us-east-2.elasticbeanstalk.com/api/";
-axios.defaults.baseURL = "http://localhost:4000/api/";;
+axios.defaults.baseURL = "http://localhost:4000/api/";
 let token = cookie.load("token");
 if (token && token.length) {
 	axios.defaults.headers.common['Authorization'] = token;

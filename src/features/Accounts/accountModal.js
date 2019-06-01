@@ -85,6 +85,7 @@ class AccountModal extends Component {
 								initialValue: this.props.accountData.initialAmount,
 							})(
 								<InputNumber
+									style={{ width: "100%" }}
 									formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 									parser={value => value.replace(/\$\s?|(,*)/g, '')}
 									size="large"
@@ -103,7 +104,7 @@ class AccountModal extends Component {
 AccountModal.propTypes = {
 	accountData: PropTypes.object,
 	showModal: PropTypes.bool.isRequired,
-    form: PropTypes.object.isRequired,
+	form: PropTypes.object.isRequired,
 	submitAccount: PropTypes.func.isRequired,
 	cancelModal: PropTypes.func.isRequired
 
