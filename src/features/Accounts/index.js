@@ -139,7 +139,7 @@ class AccountsPage extends Component {
 						grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
 						dataSource={dataSource}
 						renderItem={(item, index) => (
-							<Col span={5}>
+							<Col span={4}>
 								<List.Item onDoubleClick={() => this.handleCardPick(item)}>
 									<Card
 										bordered
