@@ -10,7 +10,7 @@ import AccountsReducer from '../features/Accounts/reducer';
 const rootReducer = combineReducers({
 	routing: routerReducer,
 	home: HomePageReducer,
-	accounts: AccountsReducer,
+	accounts: AccountsReducer
 });
 
 export default rootReducer;

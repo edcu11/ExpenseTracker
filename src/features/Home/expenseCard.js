@@ -56,7 +56,7 @@ class ExpenseCard extends React.Component {
             <div>
                 <Row>
                     <Col lg={4} xs={6} md={6} sm={6}>
-                        <Ellipsis length={35} tooltip>{this.props.expense.description}</Ellipsis>
+                        <Ellipsis length={35} tooltip>{this.props.expense.category.name}</Ellipsis>
                     </Col>
                     <Col lg={4} xs={2} md={2} sm={2}>
                         {/* <Button onClick={this.openEdit} size="small" type="dashed" shape="circle" icon="edit" /> */}

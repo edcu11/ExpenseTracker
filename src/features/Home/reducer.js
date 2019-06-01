@@ -16,14 +16,14 @@ const reducer = (state = initState, action) => {
     switch (action.type) {
         case types.GET_EXPENSES:
             return { ...state, expenses: [...action.payload, ...state.expenses] };
-        case types.GET_CATEGORIES:
-            return { ...state, categories: action.payload };
         case types.CLEAR_EXPENSES:
             return { ...state, expenses: [] };
         case types.GET_EXPENSES_COUNT:
             return { ...state, expensesCount: action.count };
         case types.GET_ACCOUNT:
             return { ...state, account: action.payload };
+        case types.GET_CATEGORIES:
+            return { ...state, categories: [...action.payload] };
         case CLEAN_REDUCER:
             return initState;
         case CLEAR_SESSION:

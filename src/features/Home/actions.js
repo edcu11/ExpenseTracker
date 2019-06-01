@@ -14,17 +14,23 @@ export const GetExpenses = (id) => (dispatch) => {
 };
 
 export const CreateExpense = (expense, descriptions) => (dispatch) => {
-  return axios.post(`/Expenses/createExpense`, expense, descriptions).then( () => {
+  let data = {
+      expense: expense,
+      descriptions: descriptions
+  }
+  return axios.post(`/Expenses/createExpense`, data).then(() => {
     dispatch(BeginExpenses(expense.accountId))
   });
 };
 
-export const GetCategories = () => (dispatch) => {
-  return axios.get(`/categories`)
-    .then((response) => {
-      dispatch({ type: types.GET_CATEGORIES, payload: response.data })
-    });
-}
+
+export const FindCategory = (id) => (dispatch, getState) => {
+  let state = getState();
+  return state.home.categories.find((c) => {
+    return c.id === id;
+  });
+};
+
 
 export const ClearExpenses = () => (dispatch) => {
   dispatch({ type: types.CLEAR_EXPENSES });
@@ -35,18 +41,18 @@ export const BeginExpenses = (id) => (dispatch) => {
   dispatch(ClearExpenses());
   dispatch(CountExpenses(id));
   dispatch(GetAccount(id));
+  dispatch(GetCategories());
   return dispatch(GetExpenses(id));
 };
 
 export const GetAccount = (id) => (dispatch) => {
-  let filter = (id !== null) ? 
-  { "where": { "id": id }, "limit": 1 } : {};
+  let filter = (id !== null) ?
+    { "where": { "id": id }, "limit": 1 } : {};
   return axios.get(`/accounts?filter=${encodeURIComponent(JSON.stringify(filter))}`)
     .then((response) => {
       dispatch({ type: types.GET_ACCOUNT, payload: response.data[0] })
     });
 };
-
 
 export const CountExpenses = (id) => (dispatch) => {
   let filter = (id !== null) ? { "where": { "accountId": id } } : {};
@@ -55,6 +61,29 @@ export const CountExpenses = (id) => (dispatch) => {
       dispatch({ type: types.GET_EXPENSES_COUNT, count: response.data.count })
     });
 };
+
+export const GetCategories = () => (dispatch) => {
+  return axios.get(`/categories`)
+    .then((response) => {
+      return dispatch({ type: types.GET_CATEGORIES, payload: response.data })
+    });
+}
+
+export const CreateCategory = (data) => (dispatch) => {
+  console.log("pendek:", data)
+  return axios.post(`/categories`, data).then(() => {
+    dispatch(GetCategories());
+  });
+};
+
+export const DeleteCategory = (id) => (dispatch) => {
+  return axios.delete(`/categories/${id}`).then(() => {
+    return dispatch(GetCategories());
+  });
+};
+
+
+
 
 function BuildExpensesFilter(page = 1, pageSize = 10) {
   let filter = {

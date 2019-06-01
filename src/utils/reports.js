@@ -25,19 +25,27 @@ export function closeToCategoryLimit(expectedExpense, categoryBalance) {
     return (parseInt(expectedExpense) * 0.20) > parseInt(expectedExpense) - parseInt(categoryBalance);
 }
 
+export function addNormalDescription(descriptions) {
+    if(descriptions.length < 1)
+        descriptions.push({description: 'You can spend all the money you want!'})
+}
 
 //
-export function GenerateReport(expense, account, lastExpense) {
+export function GenerateReport(expense, account, category) {
     let descriptions = [];
-    let categoryName = lastExpense.category.name;
+    let categoryName = category ? category.name : "";
     if (userBalanceUnderLimit(expense.balance, account.initialAmount, 0.10))
-        descriptions.push({description: `Theres less than 10% of your salary left!`})
-    if (aboveSalary(expense.balance))
-        descriptions.push({description: `You've succesfully wasted all your money!`})
-    if (closeToCategoryLimit(lastExpense.category.expectedExpense, expense.categoryBalance))
-        descriptions.push({description: `You are about to reach ${categoryName}'s limit`})
-    if (surpassedExpectedExpense(lastExpense.category.expectedExpense, expense.categoryBalance))
-        descriptions.push({description: `You have spent all the money you can on ${categoryName}`})
+        if (aboveSalary(expense.balance))
+            descriptions.push({ description: `You've succesfully wasted all your money!` })
+        else
+            descriptions.push({ description: `Theres less than 10% of your salary left!` })
+    if (closeToCategoryLimit(category.expectedExpense, expense.categoryBalance))
+        if (surpassedExpectedExpense(category.expectedExpense, expense.categoryBalance))
+            descriptions.push({ description: `You have spent all the money you can on ${categoryName}` })
+        else
+            descriptions.push({ description: `You are about to reach ${categoryName}'s limit` })
+
+    addNormalDescription(descriptions);
     return descriptions;
 }
 
