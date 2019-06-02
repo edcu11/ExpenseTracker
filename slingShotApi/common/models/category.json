@@ -1,0 +1,31 @@
+{
+    "name": "category",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "expectedExpense": {
+            "type": "number",
+            "required": true,
+            "postgresql": {
+                "dataType": "decimal"
+            }
+        }
+    },
+    "validations": [],
+    "relations": {
+        "expense": {
+            "type": "hasMany",
+            "model": "expense",
+            "foreignKey": "categoryId"
+        }
+    },
+    "acls": [],
+    "methods": {}
+}

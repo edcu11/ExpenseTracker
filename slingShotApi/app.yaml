@@ -1,0 +1,6 @@
+# [START app_yaml]
+runtime: nodejs  
+env: flex  
+beta_settings:
+  cloud_sql_instances: acklen:asia-east2:acklen2
+# [END app_yaml]
