@@ -15,14 +15,15 @@ class Empty extends Component {
 	};
 
 	getTopMenu() {
-		return (
-			<Menu onClick={this.handleClick} mode="horizontal">
-				<Menu.Item key="accounts">
-					<Icon type="appstore" />
-					Accounts
+		if (location.pathname.localeCompare("/accounts"))
+			return (
+				<Menu onClick={this.handleClick} mode="horizontal">
+					<Menu.Item key="accounts">
+						<Icon type="appstore" />
+						Accounts
 				</Menu.Item>
-			</Menu>
-		);
+				</Menu>
+			);
 	}
 
 

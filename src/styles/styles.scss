@@ -1,7 +1,7 @@
 
-.entryCardDescription{
+.userCard{
     .ant-statistic-content-value-decimal{
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 
@@ -21,7 +21,20 @@
     padding: 50px 60px 0;
     background: rgb(255, 255, 255);
     text-align: 'right';
+    height:     100vh;
+    width:     100%;
+    overflow-y: scroll;
 }
 
+
+.expensesButton{
+    width: '100%';
+}
+
+.descriptionList{
+    .ant-descriptions-title .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item-label {
+        background: #fff;
+    }
+}
 
 

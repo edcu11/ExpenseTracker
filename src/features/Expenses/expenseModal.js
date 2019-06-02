@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { InputNumber, DatePicker, Modal, Col, Select, Form, Row, Button } from 'antd';
+import { InputNumber, Modal, Col, Select, Form, Row, Button } from 'antd';
 var moment = require('moment');
-const dateFormat = 'YYYY/MM/DD';
+// const dateFormat = 'YYYY/MM/DD';
 
 class ExpenseModal extends Component {
     constructor(props) {
@@ -54,7 +54,7 @@ class ExpenseModal extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <Col span={12}>
-                <Button onClick={this.openModal}>
+                <Button style={{width:"100%"}} onClick={this.openModal}>
                     Add Expense
                 </Button>
                 <Modal
@@ -77,7 +77,7 @@ class ExpenseModal extends Component {
                 >
                     <Form>
                         <Row>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <Form.Item>
                                     {getFieldDecorator(`categoryId`, {
                                         rules: [{
@@ -106,7 +106,7 @@ class ExpenseModal extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <Form.Item label={'Amount Spent'}>
                                     {getFieldDecorator('amount', {
                                         rules: [{
@@ -118,26 +118,13 @@ class ExpenseModal extends Component {
                                         initialValue: this.props.expenseData.initialAmount,
                                     })(
                                         <InputNumber
-                                            style={{ width: "90%" }}
+                                            style={{ width: "100%" }}
                                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                             size="large"
                                         />
                                     )}
                                 </Form.Item>
-                            </Col>
-                            <Col span={12}>
-                                <Form.Item label='Date'>
-                                    {getFieldDecorator('date', {
-                                        rules: [{
-                                            required: true, message: 'Invalid Date',
-                                        }],
-                                        initialValue: moment(this.props.expenseData.date)
-                                    })(
-                                        <DatePicker disabledDate={this.disabledDate} format={dateFormat} />
-                                    )}
-                                </Form.Item>
-
                             </Col>
                         </Row>
                     </Form>

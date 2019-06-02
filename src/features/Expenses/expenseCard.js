@@ -56,10 +56,10 @@ class ExpenseCard extends React.Component {
         return (
             <div>
                 <Row>
-                    <Col lg={8} xs={6} md={6} sm={6}>
+                    <Col lg={8} xs={12} md={12} sm={12}>
                         <Ellipsis length={35} tooltip>{this.props.expense.category.name}</Ellipsis>
                     </Col>
-                    <Col lg={5} xs={7} md={7} sm={5} className="ExpenseCardTitle">
+                    <Col lg={5} xs={12} md={12} sm={12} className="ExpenseCardTitle">
                         <Statistic
                             title="cantidad"
                             value={this.props.expense.amount}
@@ -68,7 +68,7 @@ class ExpenseCard extends React.Component {
                             prefix={<Icon viewBox="0 0 1024 1024" type={'minus'}>L</Icon>}
                         />
                     </Col>
-                    <Col className="ExpenseCardDescription" lg={5} xs={7} md={7} sm={5}>
+                    <Col className="ExpenseCardDescription" lg={5} xs={12} md={12} sm={12}>
                         <Statistic
                             title="Category Expense"
                             value={this.props.expense.categoryBalance}
@@ -78,7 +78,7 @@ class ExpenseCard extends React.Component {
                             suffix={`/ ${this.props.expense.category.expectedExpense}`}
                         />
                     </Col>
-                    <Col className="ExpenseCardDescription" lg={5} xs={7} md={7} sm={5}>
+                    <Col className="ExpenseCardDescription" lg={5} xs={12} md={12} sm={12}>
                         <Statistic
                             title="Account Balance"
                             value={this.props.expense.balance}

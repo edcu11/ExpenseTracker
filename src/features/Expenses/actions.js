@@ -26,7 +26,7 @@ export const CreateExpense = (expense, descriptions) => (dispatch) => {
 
 export const FindCategory = (id) => (dispatch, getState) => {
   let state = getState();
-  return state.home.categories.find((c) => {
+  return state.expenses.categories.find((c) => {
     return c.id === id;
   });
 };

@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import EmptyLayout from './features/layouts/empty';
 import NotFoundPage from './features/NotFound';
-import HomePage from './features/Home';
+import HomePage from './features/Expenses';
 import AccountsPage from './features/Accounts';
 
 export default (

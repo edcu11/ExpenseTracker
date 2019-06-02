@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GetAccounts, CreateAccount, EditAccount, DeleteAccount } from './actions';
-import { List, Statistic, Card, Icon, Col, Row, message, Modal } from 'antd';
+import { Statistic, Card, Icon, Col, Row, message, Modal } from 'antd';
 import { getAvatars } from '../../utils/images';
 import addImage from '../../images/add.png';
 import AccountModal from './accountModal';
@@ -41,27 +41,28 @@ class AccountsPage extends Component {
 	}
 
 	getBalanceStatistic = (user) => {
-		let iconData = this.getIconData(user.balance < user.initialAmount * 0.10);
+		let iconData = this.getIconData(user.balance < user.initialAmount * 0.30);
 		return (
-			<Col className="entryCardDescription">
+			<Col className="userCard">
 				<Statistic
 					title="balance"
 					value={user.balance}
-					precision={2}
-					valueStyle={{ color: iconData.color, fontSize: "17px" }}
+					precision={0}
+					valueStyle={{ color: iconData.color, fontSize: "14px" }}
 					prefix={<Icon viewBox="0 0 1024 1024" type={iconData.moneyIcon}>$</Icon>}
+					suffix={`/ ${user.initialAmount}`}
 				/>
 			</Col>
 		)
 	}
 
-	getIndexAvatar = (index) => {
-		return <img src={this.state.avatars[index % 6]} alt="Logo" />
+	getIndexAvatar = (id, index) => {
+		return <img onClick={() => this.handleCardPick(id)} src={this.state.avatars[index % 6]} alt="Logo" />
 	}
 
 	handleCardPick = (account) => {
 		// console.log("my props: ", this.props);
-		this.props.goToPage(`/accounts/${account.id}`);
+		this.props.goToPage(`/accounts/${account}`);
 	}
 
 	showAddModal = () => {
@@ -127,45 +128,42 @@ class AccountsPage extends Component {
 	render() {
 		let dataSource = this.props.accounts ? this.props.accounts : [];
 		return (
-			<Row className={"accountList"} gutter={16}>
+			<Row className={"accountList"} type="flex" justify="center" gutter={16}>
 				<AccountModal
 					showModal={this.state.showCreateModal}
 					accountData={this.state.accountData}
 					submitAccount={this.state.submitAction}
 					cancelModal={this.closeAccountModal}
 				/>
-				<Col lg={18} xs={22} md={22} sm={22}>
-					<List
-						grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
-						dataSource={dataSource}
-						renderItem={(item, index) => (
-							<Col span={4}>
-								<List.Item onDoubleClick={() => this.handleCardPick(item)}>
-									<Card
-										bordered
-										hoverable
-										style={{ width: 200, height: 200 }}
-										actions={[
-											<a key="action" onClick={() => { return this.showEditModal(item) }} > <Icon type="edit" theme="outlined" /></a>,
-											<a key="action" onClick={() => { return this.showDeleteConfirm(item) }} >  <Icon type="delete" theme="outlined" /></a>,
-										]}
-										cover={this.getIndexAvatar(index)}
-									>
-										<Card.Meta title={item.username} description={this.getBalanceStatistic(item)} />
-									</Card>
-								</List.Item>
+				<Col lg={24} xs={24} md={24} sm={24}>
+					<Col xs={{ span: 16 }} sm={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+						<Card
+							bordered
+							hoverable
+							style={{ width: 200, height: 200 }}
+							cover={<img src={addImage} onClick={() => this.showAddModal()} />}
+						>
+						</Card>
+					</Col>
+					{dataSource.map((item, index) => {
+						return (
+							<Col xs={{ span: 16 }} sm={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }} xl={{ span: 6 }} key={index}>
+								<Card
+									bordered
+									hoverable
+									key={index}
+									style={{ width: 200, height: 200 }}
+									actions={[
+										<a key="action" onClick={() => { return this.showEditModal(item) }} > <Icon type="edit" theme="outlined" /></a>,
+										<a key="action" onClick={() => { return this.showDeleteConfirm(item) }} >  <Icon type="delete" theme="outlined" /></a>,
+									]}
+									cover={this.getIndexAvatar(item.id, index)}
+								>
+									<Card.Meta title={item.username} description={this.getBalanceStatistic(item)} />
+								</Card>
 							</Col>
-						)}
-					/>
-				</Col>
-				<Col span={2}>
-					<Card
-						bordered
-						hoverable
-						style={{ width: 200, height: 200 }}
-						cover={<img src={addImage} onClick={() => this.showAddModal()} />}
-					>
-					</Card>
+						)
+					})}
 				</Col>
 			</Row >
 		);

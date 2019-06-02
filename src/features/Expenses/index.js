@@ -12,7 +12,7 @@ import CategoriesDrawer from './categoriesModal';
 var moment = require('moment');
 
 
-class Home extends Component {
+class Expenses extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -59,9 +59,11 @@ class Home extends Component {
 	}
 
 	createExpense = (expenseData) => {
+		expenseData.date = moment();
 		let lastExpense = this.findLastCategoryExpense(expenseData.categoryId);
 		this.defineBalances(expenseData, lastExpense);
 		let descriptions = GenerateReport(expenseData, this.props.account, this.props.findCategory(expenseData.categoryId));
+		// console.log("Expense:", expenseData, descriptions);
 		this.props.createExpense(expenseData, descriptions).then(() => {
 			message.success(`Created Succesfully!`);
 		}).catch(() => {
@@ -126,10 +128,25 @@ class Home extends Component {
 		return (<div></div>)
 	}
 
-
 	render() {
 		return (
 			<Col style={{ paddingLeft: "10px" }} xs={23} sm={23} md={23} lg={23} >
+				<Row gutter={16} type="flex" justify="center">
+					<Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 20 }} lg={{ span: 20 }} xl={{ span: 20 }} >
+						<ExpenseModal
+							expenseData={this.state.expenseData}
+							showModal={this.state.showExpenseModal}
+							submitExpense={this.state.submitAction}
+							cancelModal={this.closeExpenseModal}
+							categories={this.props.categories}
+						/>
+						<CategoriesDrawer
+							categories={this.props.categories}
+							expenses={this.props.expenses}
+							findLastCategoryExpense={this.findLastCategoryExpense}
+						/>
+					</Col>
+				</Row>
 				<Row>
 					<Spin spinning={this.state.loading}>
 						<div className="entryList">
@@ -161,29 +178,12 @@ class Home extends Component {
 						</div>
 					</Spin>
 				</Row>
-				<Row gutter={16}>
-					<Col span={4}>
-						<ExpenseModal
-							expenseData={this.state.expenseData}
-							showModal={this.state.showExpenseModal}
-							submitExpense={this.state.submitAction}
-							cancelModal={this.closeExpenseModal}
-							categories={this.props.categories}
-						/>
-						<CategoriesDrawer
-							categories={this.props.categories}
-							expenses={this.props.expenses}
-							findLastCategoryExpense={this.findLastCategoryExpense}
-						/>
-					</Col>
-				</Row>
-
 			</Col>
 		);
 	}
 }
 
-Home.propTypes = {
+Expenses.propTypes = {
 	expenses: PropTypes.array.isRequired,
 	account: PropTypes.object.isRequired,
 	categories: PropTypes.array.isRequired,
@@ -198,10 +198,10 @@ Home.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		expenses: state.home.expenses,
-		expensesCount: state.home.expensesCount,
-		account: state.home.account,
-		categories: state.home.categories
+		expenses: state.expenses.expenses,
+		expensesCount: state.expenses.expensesCount,
+		account: state.expenses.account,
+		categories: state.expenses.categories
 	};
 }
 
@@ -215,4 +215,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
