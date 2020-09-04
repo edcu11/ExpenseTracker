@@ -125,7 +125,7 @@
     "json-loader": "0.5.7",
     "mockdate": "2.0.2",
     "node": "10.6.0",
-    "node-sass": "4.9.1",
+    "node-sass": "4.13.1",
     "opn-cli": "3.1.0",
     "postcss-loader": "2.1.5",
     "prompt": "1.0.0",
